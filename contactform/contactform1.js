@@ -5,7 +5,7 @@ $('form.contactForm').on('submit',function(e){
   
     $.ajax({
         url: "https://script.google.com/macros/s/AKfycbwYACJ3parvWi47Klx8RN6pbSW23mGrk-YAH4f7uDd-uKNMc8vhNDFjkvjw7d84Oks/exec",
-        type: "POST",
+        method: "POST",
         dataType: "json",
         data: $("form.contactForm").serialize(),
         success: function(response) {
@@ -21,7 +21,7 @@ $('form.contactForm').on('submit',function(e){
         },
         error: function() {
             
-            alert("Something went wrong. Please try again.")
+            alert("Something went wrong. Please try again12.")
         }
     })
 });
