@@ -1,4 +1,4 @@
-$('contactForm').on('submit',function(e){
+$('contactForm').submit(function(e){
     //optional validation code here
 
     e.preventDefault();
