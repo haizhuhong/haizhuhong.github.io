@@ -90,8 +90,9 @@ jQuery(document).ready(function($) {
     });
     if (ferror) return false;
     else var str = $(this).serialize();
+
     $.ajax({
-      method: "POST",
+      type: "POST",
       url: "https://script.google.com/macros/s/AKfycbwYACJ3parvWi47Klx8RN6pbSW23mGrk-YAH4f7uDd-uKNMc8vhNDFjkvjw7d84Oks/exec",
       data: str,
       dataType: "json",
