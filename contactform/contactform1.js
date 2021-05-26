@@ -1,4 +1,4 @@
-$('form.contactForm').on('submit',function(e){
+$('contactForm').on('submit',function(e){
     //optional validation code here
 
     e.preventDefault();
@@ -7,11 +7,11 @@ $('form.contactForm').on('submit',function(e){
         url: "https://script.google.com/macros/s/AKfycbwYACJ3parvWi47Klx8RN6pbSW23mGrk-YAH4f7uDd-uKNMc8vhNDFjkvjw7d84Oks/exec",
         method: "POST",
         dataType: "json",
-        data: $("form.contactForm").serialize(),
+        data: $("contactForm").serialize(),
         success: function(response) {
             
             if(response.result == "success") {
-                $('form.contactForm')[0].reset();
+                $('contactForm')[0].reset();
                 alert('Thank you for contacting us.');
                 return true;
             }
