@@ -1,115 +1,86 @@
-jQuery(document).ready(function($) {
+
+(function ($) {
   "use strict";
 
-  //Contact
-  $('form.contactForm').submit(function() {
-    var f = $(this).find('.form-group'),
-      ferror = false,
-      emailExp = /^[^\s()<>@,;:\/]+@\w[\w\.-]+\.[a-z]{2,}$/i;
+  
+  /*==================================================================
+  [ Validate ]*/
+  var name = $('.validate-input input[name="name"]');
+  var email = $('.validate-input input[name="email"]');
+  var subject = $('.validate-input input[name="subject"]');
+  var message = $('.validate-input textarea[name="message"]');
 
-    f.children('input').each(function() { // run all inputs
 
-      var i = $(this); // current input
-      var rule = i.attr('data-rule');
+  $('.validate-form').on('submit',function(e){
+      var check = true;
 
-      if (rule !== undefined) {
-        var ierror = false; // error flag for current input
-        var pos = rule.indexOf(':', 0);
-        if (pos >= 0) {
-          var exp = rule.substr(pos + 1, rule.length);
-          rule = rule.substr(0, pos);
-        } else {
-          rule = rule.substr(pos + 1, rule.length);
-        }
-
-        switch (rule) {
-          case 'required':
-            if (i.val() === '') {
-              ferror = ierror = true;
-            }
-            break;
-
-          case 'minlen':
-            if (i.val().length < parseInt(exp)) {
-              ferror = ierror = true;
-            }
-            break;
-
-          case 'email':
-            if (!emailExp.test(i.val())) {
-              ferror = ierror = true;
-            }
-            break;
-
-          case 'checked':
-            if (! i.is(':checked')) {
-              ferror = ierror = true;
-            }
-            break;
-
-          case 'regexp':
-            exp = new RegExp(exp);
-            if (!exp.test(i.val())) {
-              ferror = ierror = true;
-            }
-            break;
-        }
-        i.next('.validation').html((ierror ? (i.attr('data-msg') !== undefined ? i.attr('data-msg') : 'wrong Input') : '')).show('blind');
+      if($(name).val().trim() == ''){
+          showValidate(name);
+          check=false;
       }
-    });
-    f.children('textarea').each(function() { // run all inputs
 
-      var i = $(this); // current input
-      var rule = i.attr('data-rule');
-
-      if (rule !== undefined) {
-        var ierror = false; // error flag for current input
-        var pos = rule.indexOf(':', 0);
-        if (pos >= 0) {
-          var exp = rule.substr(pos + 1, rule.length);
-          rule = rule.substr(0, pos);
-        } else {
-          rule = rule.substr(pos + 1, rule.length);
-        }
-
-        switch (rule) {
-          case 'required':
-            if (i.val() === '') {
-              ferror = ierror = true;
-            }
-            break;
-
-          case 'minlen':
-            if (i.val().length < parseInt(exp)) {
-              ferror = ierror = true;
-            }
-            break;
-        }
-        i.next('.validation').html((ierror ? (i.attr('data-msg') != undefined ? i.attr('data-msg') : 'wrong Input') : '')).show('blind');
+      if($(subject).val().trim() == ''){
+          showValidate(subject);
+          check=false;
       }
-    });
-    if (ferror) return false;
-    else var str = $(this).serialize();
-    $.ajax({
-      method: "POST",
-      url: "https://script.google.com/macros/s/AKfycbwYACJ3parvWi47Klx8RN6pbSW23mGrk-YAH4f7uDd-uKNMc8vhNDFjkvjw7d84Oks/exec",
-      data: str,
-      dataType: "json",
-      success: function(msg) {
-        // alert(msg);
-        if (msg == 'OK') {
-          $("#sendmessage").addClass("show");
-          $("#errormessage").removeClass("show");
-          $('.contactForm').find("input, textarea").val("");
-        } else {
-          $("#sendmessage").removeClass("show");
-          $("#errormessage").addClass("show");
-          $('#errormessage').html(msg);
-        }
 
+
+      if($(email).val().trim().match(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/) == null) {
+          showValidate(email);
+          check=false;
       }
-    });
-    return false;
+
+      if($(message).val().trim() == ''){
+          showValidate(message);
+          check=false;
+      }
+      if(!check)
+          return false;
+
+      e.preventDefault();
+    
+      $.ajax({
+          url: "https://script.google.com/macros/s/AKfycbwYACJ3parvWi47Klx8RN6pbSW23mGrk-YAH4f7uDd-uKNMc8vhNDFjkvjw7d84Oks/exec",
+          method: "POST",
+          dataType: "json",
+          data: $(".contact1-form").serialize(),
+          success: function(response) {
+              
+              if(response.result == "success") {
+                  $('.contact1-form')[0].reset();
+                  alert('Thank you for contacting us.');
+                  return true;
+              }
+              else {
+                  alert("Something went wrong. Please try again.")
+              }
+          },
+          error: function() {
+              
+              alert("Something went wrong. Please try again.")
+          }
+      })
   });
 
-});
+
+  $('.validate-form .input1').each(function(){
+      $(this).focus(function(){
+         hideValidate(this);
+     });
+  });
+
+  function showValidate(input) {
+      var thisAlert = $(input).parent();
+
+      $(thisAlert).addClass('alert-validate');
+  }
+
+  function hideValidate(input) {
+      var thisAlert = $(input).parent();
+
+      $(thisAlert).removeClass('alert-validate');
+  }
+  
+  
+
+})(jQuery);
