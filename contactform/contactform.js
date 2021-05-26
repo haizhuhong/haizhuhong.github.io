@@ -2,7 +2,7 @@ jQuery(document).ready(function($) {
   "use strict";
 
   //Contact
-  $('form.contactForm').submit(function(e) {
+  $('form.contactForm').submit(function() {
     var f = $(this).find('.form-group'),
       ferror = false,
       emailExp = /^[^\s()<>@,;:\/]+@\w[\w\.-]+\.[a-z]{2,}$/i;
@@ -90,8 +90,6 @@ jQuery(document).ready(function($) {
     });
     if (ferror) return false;
     else var str = $(this).serialize();
-
-    e.preventDefault();
 
     $.ajax({
       type: "POST",
