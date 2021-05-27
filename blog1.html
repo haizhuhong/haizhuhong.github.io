@@ -192,7 +192,30 @@
                           <input type="submit" name="submit" class="btn btn-defeault btn-send" value="Send message">
                         </div>
                     </div>
+                    <p id="my-form-status"></p>
                   </form>
+                  <script>
+                    var form = document.getElementById("my-form");
+                        
+                        async function handleSubmit(event) {
+                          event.preventDefault();
+                          var status = document.getElementById("my-form-status");
+                          var data = new FormData(event.target);
+                          fetch(event.target.action, {
+                            method: form.method,
+                            body: data,
+                            headers: {
+                                'Accept': 'application/json'
+                            }
+                          }).then(response => {
+                            status.innerHTML = "Thanks for your submission!";
+                            form.reset();
+                          }).catch(error => {
+                            status.innerHTML = "Oops! There was a problem submitting your form."
+                          });
+                        }
+                        form.addEventListener("submit", handleSubmit)
+                      </script>
                 </div>
               </div>
             </div>
@@ -235,7 +258,6 @@
   <script src="https://d3js.org/d3.v4.min.js"></script>
 
   <!-- Contact Form JavaScript File -->
-  <script src="contactform/contactform.js"></script>
 
   <!-- Template Main Javascript File -->
   <script src="js/main.js"></script>
