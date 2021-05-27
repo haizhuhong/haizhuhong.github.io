@@ -19,7 +19,7 @@ function updateSVG(selectId){
                         .attr("type", "image/svg+xml")
                         .attr("width", "940")
                         .attr("height", "800")
-                        .attr("margin", 30);
+                        .attr("margin", "30");
     }
   }
 
