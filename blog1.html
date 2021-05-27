@@ -101,7 +101,7 @@
               </div>
               <div class="controls">
                 <div id="corpus_selection" class="control">
-                  <p><label>Select Corpus</label></p>
+                  <p><label>Select corpus</label></p>
                   <select id="corpus_select" onchange="updateSVG('corpus_select');">
                     <option value="clear"></option>
                     <option value="midsummer">A Midsummer Night's Dream</option>
@@ -112,7 +112,7 @@
           
           
                   <div id="vis">
-                      <object id="svg-object" type="image/svg+xml">
+                      <object id="svg-object" type="image/svg+xml" style="=margin-top: 10px; margin-bottom: 10px">
                       </object>
           
                   </div>
@@ -138,7 +138,7 @@
                   </div>
           
                   <div id="search_section" class="controls">
-                      <p><label>Enter Word</label></p>
+                      <p><label>Enter a word</label></p>
                       <form id="form" onsubmit="return false;">
                           <input type="text" id="userInput" />
                           <input type="submit" value= "Plot kde" onclick="othername();" />
