@@ -88,14 +88,14 @@
                         <li class="comment"><i class="ion-ios-heart-outline"></i><a href="#">0 Comments</a></li>
                       </ul>
                     </div>
-                    <p class="mb-30">This goal of this project is to compare William Shakespeare’s dramas with Tang Xianzu’s, who is known as “the Shakespeare of China”. The two great playwrights were both active in 1500s-1600s, died in the same year, recognized as great 
+                    <p class="mb-30">The goal of this project is to compare William Shakespeare’s plays with Tang Xianzu’s, who is known as “the Shakespeare of China”. The two great playwrights were both active in 1500s-1600s, died in the same year, recognized as great 
                       playwrights for centuries and influenced the development of performance arts significantly. But unlike Shakespeare who became a household name for every well-educated person in 20th century China, Tang’s reputation has only begun to revive more recently. 
                       As China is going through a modern transformation, the economic booming nurtured the need for social and cultural identity amongst the younger generation. Therefore, my question is whether Tang’s works are comparable to those of Shakespeare’s or not and why.</p>
                     <p class="mb-30">Since Tang Xianzu did not dedicate himself to playwrighting until his retirement, he only left four highly ackownledged plays. Among the four, The Peony Pavilion is the most influencial piece and well known oversea. Peony, often referred as 
-                      the 16th century Romeo and Juliet of China, depicted a romantic, passionate and intricate love story between a young scholar and the young daughter of a high official. Despite Peony ended happily, both dramas have many similar plots including resurrection. 
-                      Also, Peony is a bit similar to A Midsummer Night's Dream given both were comedies, involved supernatural spirits to aid the progress of plots and depicted determined female characters who were able to stand against societal and family pressures and to 
+                      the 16th century Romeo and Juliet of China, depicted a romantic, passionate and intricate love story between a young scholar and the young daughter of a high official. Despite Peony ended happily, both plays share many similar plots including death and resurrection. 
+                      Also, Peony is a bit similar to A Midsummer Night's Dream given both were comedies, involving supernatural spirits to aid the progress of plots and depicted determined female characters who were able to stand against societal and family pressures and to 
                       pursue their personal happiness.</p>
-                    <p class="mb-30">Here you can select a text corpus to visualize what are the hidden themes embedded in the word network graph and compare between the aforementioned three dramas. Words clustered together tend to co-occure more often than words that are far away.</p>
+                    <p class="mb-30">Here you can select a text corpus to visualize what are the hidden themes embedded in the word network graph and compare between the aforementioned three dramas. Words clustered together tend to co-occur more often than words that are scattered.</p>
                   </div>
                 </div>
               </div>
@@ -112,9 +112,8 @@
           
           
                   <div id="vis">
-                      <object id="svg-object" type="image/svg+xml">
-                      </object>
-          
+                      <embed id="svg-object" type="image/svg+xml" width="0" height="0">
+                      </embed>
                   </div>
 
                   <div class="row">
@@ -125,7 +124,7 @@
                             <p class="mb-30">In Tang's corpus, spring is generally associated with more positive sentiments, such as "love" and "joy", while autumn more often relates to negative sentiments. 
                               It is potentially because spring and autumn are the two most important seasons to agricultural society.</p>
                             <blockquote>Seasonality is commonly used in literature to mark the development of narrative time and plots.</blockquote>
-                            <p class="mb-30">But for Shakespeare’s two plays, different word clusters are observed. In both dramas, we can see that “moon”, “moonshine” and “summer” 
+                            <p class="mb-30">But for Shakespeare’s two plays, different word clusters are observed. In both plays, we can see that “moon”, “moonshine” and “summer” 
                               are more commonly associated with “love”, “desire”, “crazy”, and “passion”, which usually associated with stronger sentiments.</p>
                             <p class="mb-30">Text data, by nature, is highly abstract and more unstructured than other types of data. The choice of words, grammar, and sentence structures are all manifestations of human thoughts. So it is interesting to employ unsupervised algorithms to explore and 
                               discover the hidden structures of texts. Specifically, textplot is one effective method to reveal the underlying semantic themes of a large collection of text data. In this text network graph, each node represents a word that appeared in the corpus 
@@ -156,7 +155,7 @@
                       <div class="content-main single-post padDiv">
 
                         <p class="mb-30">The area under the kernel density estimation plot or the integral of the kernel density estimation function can be computed and compared across words. Thus, the similarity scores of words can be calculated as the percentage of the overlapping areas. In other words, words have similar shapes of KDE plots are assigned larger weights and thus 
-                          located near each other in the network graph. In this project, the sliding window is set to 10 words, namely only the top ten similar neibouring words are connected with edges because dramatic texts are often short untterances. More details about 
+                          located near each other in the network graph. In this project, the sliding window is set to 10 words, which means only the top ten similar neibouring words are connected with edges because dramatic texts are often short untterance. More details about 
                           the methodology can be found <a href="http://dclure.org/essays/mental-maps-of-texts/">here</a>.
                         </p>
                       </div>
@@ -246,6 +245,19 @@
     </div>
   </div>
   <!-- End section footer -->
+  <script>
+
+    // Don't use window.onLoad like this in production, because it can only listen to one function.
+    window.onload = function () {
+        var svgElement = document.querySelector('#svg-object')
+        // Expose to window namespase for testing purposes
+        panZoomInstance = svgPanZoom(svgElement, {
+          zoomEnabled: true,
+          minZoom: 0.1
+        });
+    };
+  
+  </script>
 
   <!-- JavaScript Libraries -->
   <script src="lib/jquery/jquery.min.js"></script>
@@ -264,6 +276,7 @@
 
   <!-- Plotting Javascript File -->
   <script src="js/textplot.js"></script>
+  <script src="lib/svg-pan-zoom/svg-pan-zoom.js"></script>
 
 </body>
 

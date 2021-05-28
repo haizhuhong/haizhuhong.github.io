@@ -5,21 +5,14 @@ var margin = {top: 30, right: 30, bottom: 30, left: 60},
 function updateSVG(selectId){
     var objSel = document.getElementById(selectId);
     if (objSel.value == "clear") {
-      d3.select("#svg-object").remove();
-      d3.select("#vis").append("object")
-                        .attr("id", "svg-object")
-                        .attr("data",  "")
-                        .attr("type", "image/svg+xml");
+      d3.select("#svg-object").attr("width", "0")
+                              .attr("height", "0");
     } else {
       var selectVal = "./data/" + objSel.value + ".svg";
-      d3.select("#svg-object").remove();
-      d3.select("#vis").append("object")
-                        .attr("id", "svg-object")
-                        .attr("data",  selectVal)
-                        .attr("type", "image/svg+xml")
-                        .attr("width", "940")
-                        .attr("height", "800")
-                        .attr("margin", "30");
+      d3.select("#svg-object").attr("src",  selectVal)
+                              .attr("type", "image/svg+xml")
+                              .attr("width", "940")
+                              .attr("height", "800");
     }
   }
 
