@@ -4,11 +4,11 @@ var margin = {top: 30, right: 30, bottom: 30, left: 60},
 
 
 function getCorpus() {
-  var objSel = document.getElementById("corpus_select");
-  if (!objSel.value) {
+  var objSel = document.getElementById("corpus_select").value;
+  if (objSel.value === null) {
     return null
   } else {
-    return "./data/" + objSel.value + ".svg"
+    return "./data/" + objSel + ".svg"
   }
 }
 
@@ -17,10 +17,17 @@ $(function() {
   var lastEventListener = null;
 
   function createNewEmbed(src){
-    var embed = document.createElement('embed');
-    embed.setAttribute('style', 'width: 500px; height: 500px; border:1px solid black;');
-    embed.setAttribute('type', 'image/svg+xml');
-    embed.setAttribute('src', src);
+    if (src === null) {
+      var embed = document.createElement('embed');
+      embed.setAttribute('style', 'width: 0; height: 0;');
+      embed.setAttribute('type', 'image/svg+xml');
+      embed.setAttribute('src', "./data/midsummer.svg");
+    } else {
+      var embed = document.createElement('embed');
+      embed.setAttribute('style', 'width: 1200px; height: 1080px;');
+      embed.setAttribute('type', 'image/svg+xml');
+      embed.setAttribute('src', src);
+    }
 
     document.getElementById('vis').appendChild(embed)
 
@@ -57,11 +64,7 @@ $(function() {
     // Remove last added svg
     removeEmbed()
 
-    if (lastEmbedSrc == "./data/midsummer.svg") {
-      lastEmbedSrc = "./data/romeo.svg"
-    } else {
-      lastEmbedSrc = './data/midsummer.svg'
-    }
+    lastEmbedSrc = getCorpus()
 
     lastEmbed = createNewEmbed(lastEmbedSrc)
   })
