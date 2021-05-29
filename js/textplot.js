@@ -2,79 +2,35 @@ var margin = {top: 30, right: 30, bottom: 30, left: 60},
     width = 460 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
 
-
-function getCorpus() {
-  var objSel = document.getElementById("corpus_select").value;
-  if (objSel.value === null) {
-    return null
+function updateSVG(selectId){
+  var objSel = document.getElementById(selectId);
+  embed = document.getElementById('svg-object')
+  if (objSel.value == "clear") {
+    embed.setAttribute('width', "0")
+    embed.setAttribute('height', "0")
   } else {
-    return "./data/" + objSel + ".svg"
+    var selectVal = "./data/" + objSel.value + ".svg";
+    embed.setAttribute("src",  selectVal);
+    embed.setAttribute('width', "100%")
+    embed.setAttribute('height', "800")
   }
+
+  // 由于embed内部的svg会重新绘制，所以需要重新对embed做一次svgPanZoom
+  lastEventListener = function(){
+    svgPanZoom(embed, {
+      zoomEnabled: true,
+      controlIconsEnabled: true
+    });
+  }
+  embed.addEventListener('load', lastEventListener)
+  return embed
 }
-
-$(function() {
-
-  var lastEventListener = null;
-
-  function createNewEmbed(src){
-    if (src === null) {
-      var embed = document.createElement('embed');
-      embed.setAttribute('style', 'width: 0; height: 0;');
-      embed.setAttribute('type', 'image/svg+xml');
-      embed.setAttribute('src', "./data/midsummer.svg");
-    } else {
-      var embed = document.createElement('embed');
-      embed.setAttribute('style', 'width: 1200px; height: 1080px;');
-      embed.setAttribute('type', 'image/svg+xml');
-      embed.setAttribute('src', src);
-    }
-
-    document.getElementById('vis').appendChild(embed)
-
-    lastEventListener = function(){
-      svgPanZoom(embed, {
-        zoomEnabled: true,
-        controlIconsEnabled: true
-      });
-    }
-    embed.addEventListener('load', lastEventListener)
-
-    return embed
-  }
-
-  var lastEmbedSrc = "./data/midsummer.svg"
-    , lastEmbed = createNewEmbed(lastEmbedSrc)
-    ;
-
-  function removeEmbed(){
-    // Destroy svgpanzoom
-    svgPanZoom(lastEmbed).destroy()
-    // Remove event listener
-    lastEmbed.removeEventListener('load', lastEventListener)
-    // Null last event listener
-    lastEventListener = null
-    // Remove embed element
-    document.getElementById('vis').removeChild(lastEmbed)
-    // Null reference to embed
-    lastEmbed = null
-  }
-
-
-  $('#swap').on('click', function(){
-    // Remove last added svg
-    removeEmbed()
-
-    lastEmbedSrc = getCorpus()
-
-    lastEmbed = createNewEmbed(lastEmbedSrc)
-  })
-});
 
 
 function othername() {
   var inputword = document.getElementById("userInput").value;
   var corpus = document.getElementById("corpus_select").value;
-  if (!corpus) {
+  if (corpus == "clear") {
     d3.select("svg").remove();
     alert ("select a corpus first");
   } else {
