@@ -3,30 +3,109 @@ var margin = {top: 30, right: 30, bottom: 30, left: 60},
     height = 400 - margin.top - margin.bottom;
 
 function updateSVG(selectId){
-    var objSel = document.getElementById(selectId);
+  var objSel = document.getElementById(selectId);
+  var embed = document.createElement('embed');
+  if (objSel.value == "clear") {
+    embed.setAttribute("style", "width: 0; height: 0");
+    embed.setAttribute("type", "image/svg+xml");
+    embed.setAttribute("src", "./data/midsummer.svg");
+  } else {
+    var selectVal = "./data/" + objSel.value + ".svg";
+    embed.setAttribute("src",  selectVal);
+    embed.setAttribute("type", "image/svg+xml");
+    embed.setAttribute("style", "width: 940; height:800");
+  }
+  document.getElementById("vis").appendChild(embed)
+
+  lastEventListener = function(){
+    svgPanZoom(embed, {
+      zoomEnabled: true,
+      controlIconsEnabled: true
+    });
+  }
+  embed.addEventListener('load', lastEventListener)
+  return embed
+}
+
+
+$(function() {
+  
+  function getCorpus() {
+    var objSel = document.getElementById("#corpus-select");
     if (objSel.value == "clear") {
-      d3.select("#svg-object").attr("width", "0")
-                              .attr("height", "0");
+      return "clear";
     } else {
       var selectVal = "./data/" + objSel.value + ".svg";
-      d3.select("#svg-object").attr("src",  selectVal)
-                              .attr("type", "image/svg+xml")
-                              .attr("width", "940")
-                              .attr("height", "800");
+      return selectVal;
     }
+  }
+  
+  var lastEventListener = null;
+  var datasrc = getCorpus();
+
+  function createNewEmbed(src){
+    var embed = document.createElement('embed');
+  if (src == "clear") {
+    embed.setAttribute("style", "width: 0; height: 0");
+    embed.setAttribute("type", "image/svg+xml");
+    embed.setAttribute("src", "./data/midsummer.svg");
+  } else {
+    embed.setAttribute("src",  src);
+    embed.setAttribute("type", "image/svg+xml");
+    embed.setAttribute("style", "width: 940; height:800");
   }
 
-function othername() {
-    var inputword = document.getElementById("userInput").value;
-    var corpus = document.getElementById("corpus_select").value;
-    if (corpus == "clear") {
-      d3.select("svg").remove();
-      alert ("select a corpus first");
-    } else {
-      d3.select("svg").remove();
-      draw(corpus, inputword);
-    }
+  document.getElementById("vis").appendChild(embed)
+  
+  lastEventListener = function(){
+    svgPanZoom(embed, {
+      zoomEnabled: true,
+      controlIconsEnabled: true
+    });
   }
+  embed.addEventListener('load', lastEventListener)
+  return embed
+
+  }
+
+  var lastEmbedSrc = 'clear'
+    , lastEmbed = createNewEmbed(lastEmbedSrc)
+    ;
+
+  function removeEmbed(){
+    // Destroy svgpanzoom
+    svgPanZoom(lastEmbed).destroy()
+    // Remove event listener
+    lastEmbed.removeEventListener('load', lastEventListener)
+    // Null last event listener
+    lastEventListener = null
+    // Remove embed element
+    document.getElementById('container').removeChild(lastEmbed)
+    // Null reference to embed
+    lastEmbed = null
+  }
+
+
+  $('#swap').on('click', function(){
+    // Remove last added svg
+    removeEmbed()
+
+    lastEmbed = createNewEmbed(lastEmbedSrc)
+  })
+});
+
+
+function othername() {
+  var inputword = document.getElementById("userInput").value;
+  var corpus = document.getElementById("corpus_select").value;
+  if (corpus == "clear") {
+    d3.select("svg").remove();
+    alert ("select a corpus first");
+  } else {
+    d3.select("svg").remove();
+    draw(corpus, inputword);
+  }
+}
 
 
 

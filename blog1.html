@@ -102,12 +102,13 @@
               <div class="controls">
                 <div id="corpus_selection" class="control">
                   <p><label>Select corpus</label></p>
-                  <select id="corpus_select" onchange="updateSVG('corpus_select');">
+                  <select id="corpus_select">
                     <option value="clear"></option>
                     <option value="midsummer">A Midsummer Night's Dream</option>
                     <option value="romeo">Romeo & Juliet</option>
                     <option value="peony">The Peony Pavilion</option>
                   </select>
+                  <button id="swap">Enter</button>
                 </div>
           
           
@@ -245,15 +246,6 @@
     </div>
   </div>
   <!-- End section footer -->
-  <script>
-    document.querySelector('#svg-object').addEventListener('click', function(){
-      var svgElement = document.querySelector('#svg-object')
-      panZoomInstance = svgPanZoom(svgElement, {
-        zoomEnabled: true,
-        minZoom: 0.1,
-      });
-    })
-  </script>
 
   <!-- JavaScript Libraries -->
   <script src="lib/jquery/jquery.min.js"></script>
