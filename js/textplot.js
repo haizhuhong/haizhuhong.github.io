@@ -11,7 +11,7 @@ function updateSVG(selectId){
   } else {
     var selectVal = "./data/" + objSel.value + ".svg";
     embed.setAttribute("src",  selectVal);
-    embed.setAttribute('width', "900")
+    embed.setAttribute('width', "100%")
     embed.setAttribute('height', "800")
   }
 
@@ -23,10 +23,9 @@ function updateSVG(selectId){
         controlIconsEnabled: true
       });
     }
-    objSel.addEventListener('change', lastEventListener)
+    embed.addEventListener('load', lastEventListener)
     embed._pzLis = true
   }
-  return embed
 }
 
 
