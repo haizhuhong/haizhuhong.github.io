@@ -247,15 +247,13 @@
   <!-- End section footer -->
   <script>
 
-    // Don't use window.onLoad like this in production, because it can only listen to one function.
-    window.onload = function () {
-        var svgElement = document.querySelector('#svg-object')
-        // Expose to window namespase for testing purposes
-        panZoomInstance = svgPanZoom(svgElement, {
+    document.getElementById('#svg-object').addEventListener('load', function(){
+      svgPanZoom(document.getElementById('#svg-object'));
+      panZoomInstance = svgPanZoom(svgElement, {
           zoomEnabled: true,
           minZoom: 0.1
         });
-    };
+    })
   
   </script>
 
