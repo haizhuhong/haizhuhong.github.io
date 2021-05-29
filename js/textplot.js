@@ -23,7 +23,7 @@ function updateSVG(selectId){
         controlIconsEnabled: true
       });
     }
-    embed.addEventListener('load', lastEventListener, {passive: true})
+    embed.addEventListener('load', lastEventListener)
     embed._pzLis = true
   }
 }
