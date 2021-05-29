@@ -16,13 +16,16 @@ function updateSVG(selectId){
   }
 
   // 由于embed内部的svg会重新绘制，所以需要重新对embed做一次svgPanZoom
-  lastEventListener = function(){
-    svgPanZoom(embed, {
-      zoomEnabled: true,
-      controlIconsEnabled: true
-    });
+  if (!embed._pzLis) {
+    lastEventListener = function(){
+      svgPanZoom(embed, {
+        zoomEnabled: true,
+        controlIconsEnabled: true
+      });
+    }
+    embed.addEventListener('load', lastEventListener)
+    embed._pzLis = true
   }
-  embed.addEventListener('load', lastEventListener)
   return embed
 }
 
