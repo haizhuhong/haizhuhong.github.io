@@ -24,7 +24,7 @@ $(function() {
       embed.setAttribute('src', "./data/midsummer.svg");
     } else {
       var embed = document.createElement('embed');
-      embed.setAttribute('style', 'width: 1200px; height: 1080px;');
+      embed.setAttribute('style', 'width: 960px; height: 540px;');
       embed.setAttribute('type', 'image/svg+xml');
       embed.setAttribute('src', src);
     }
@@ -42,7 +42,7 @@ $(function() {
     return embed
   }
 
-  var lastEmbedSrc = "./data/midsummer.svg"
+  var lastEmbedSrc = null
     , lastEmbed = createNewEmbed(lastEmbedSrc)
     ;
 
@@ -74,7 +74,7 @@ $(function() {
 function othername() {
   var inputword = document.getElementById("userInput").value;
   var corpus = document.getElementById("corpus_select").value;
-  if (!corpus) {
+  if (corpus === null) {
     d3.select("svg").remove();
     alert ("select a corpus first");
   } else {
