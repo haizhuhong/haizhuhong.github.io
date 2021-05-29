@@ -4,15 +4,15 @@ var margin = {top: 30, right: 30, bottom: 30, left: 60},
 
 function updateSVG(selectId){
   var objSel = document.getElementById(selectId);
-  embed = document.getElementById('svg-object')
+  embed = document.getElementById('svg-object');
   if (objSel.value == "clear") {
-    embed.setAttribute('width', "0")
-    embed.setAttribute('height', "0")
+    embed.setAttribute('width', "0");
+    embed.setAttribute('height', "0");
   } else {
     var selectVal = "./data/" + objSel.value + ".svg";
     embed.setAttribute("src",  selectVal);
-    embed.setAttribute('width', "100%")
-    embed.setAttribute('height', "800")
+    embed.setAttribute('width', "100%");
+    embed.setAttribute('height', "800");
   }
 
   // 由于embed内部的svg会重新绘制，所以需要重新对embed做一次svgPanZoom
@@ -23,8 +23,8 @@ function updateSVG(selectId){
         controlIconsEnabled: true
       });
     }
-    embed.addEventListener('load', lastEventListener)
-    embed._pzLis = true
+    embed.addEventListener('load', lastEventListener);
+    embed._pzLis = true;
   }
 }
 
