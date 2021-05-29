@@ -34,7 +34,8 @@ $(function() {
     lastEventListener = function(){
       svgPanZoom(embed, {
         zoomEnabled: true,
-        controlIconsEnabled: true
+        controlIconsEnabled: true,
+        minZoom: 0.1
       });
     }
     embed.addEventListener('load', lastEventListener)
@@ -42,7 +43,7 @@ $(function() {
     return embed
   }
 
-  var lastEmbedSrc = null
+  var lastEmbedSrc = "./data/midsummer.svg"
     , lastEmbed = createNewEmbed(lastEmbedSrc)
     ;
 
