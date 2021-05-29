@@ -18,7 +18,7 @@ function updateSVG(selectId){
       // Expose to window namespase for testing purposes
       panZoomInstance = svgPanZoom(svgElement, {
         zoomEnabled: true,
-        fit: true;
+        fit: true,
         minZoom: 0.1
       });
     }
