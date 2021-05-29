@@ -13,6 +13,13 @@ function updateSVG(selectId){
                               .attr("type", "image/svg+xml")
                               .attr("width", "940")
                               .attr("height", "800");
+
+      var svgElement = document.querySelector('#svg-object')
+      // Expose to window namespase for testing purposes
+      panZoomInstance = svgPanZoom(svgElement, {
+        zoomEnabled: true,
+        minZoom: 0.1
+      });
     }
   }
 
